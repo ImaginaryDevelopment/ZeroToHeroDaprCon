@@ -1,14 +1,11 @@
 ﻿namespace ContosoCrafts.ProductsApi.Controllers
 
+open System
 open System.Threading.Tasks;
 open Microsoft.AspNetCore.Mvc;
 
 open ContosoCrafts.ProductsApi.Services;
-// public class RatingRequest
-// {
-//     public string ProductId { get; set; }
-//     public int Rating { get; set; }
-// }
+
 
 // assuming the framework will be ok with immutables here
 // if not uncomment the attribute and try that
@@ -22,50 +19,25 @@ type ProductsController(productService: IProductService) =
 
     [<HttpGet>]
     // public async Task<ActionResult> GetList(int page = 1, int limit = 20)
-    member this.GetList(?page, ?limit) : Task<IActionResult> =
-        let page = defaultArg page 1
-        let limit = defaultArg limit 20
-#if FSHARP6
+    member this.GetList(page : int Nullable, limit: int Nullable) : Task<IActionResult> =
+        let pagingInfo = PagingInfo(page,limit)
         task{
-            let! result = productService.GetProducts(page, limit);
+            let! result = productService.GetProducts pagingInfo;
             return this.Ok(result) :> IActionResult;
         }
-#else
-        async {
-            let! result = Async.AwaitTask(productService.GetProducts(PagingInfo(page,limit)));
-            return this.Ok(result) :> IActionResult
-        }
-        |> Async.StartAsTask
-#endif
 
     [<HttpGet("{id}")>]
     // public async Task<ActionResult> GetSingle(string id)
     member this.GetSingle(id: string) =
-#if FSHARP6
         task{
             let! result = productService.GetSingle(id);
             return this.Ok(result) :> IActionResult;
         }
-#else
-        async {
-            let! result = Async.AwaitTask(productService.GetSingle(id));
-            return this.Ok(result) :> IActionResult;
-        }
-        |> Async.StartAsTask
-#endif
 
     [<HttpPatch>]
     // public async Task<ActionResult> Patch(RatingRequest request)
     member this.Patch(request:RatingRequest): Task<IActionResult> =
-#if FSHARP6
         task{
             do! productService.AddRating(request.ProductId, request.Rating);
             return this.Ok() :> IActionResult;
         }
-#else
-        async {
-            do! Async.AwaitTask(productService.AddRating(request.ProductId, request.Rating));
-            return this.Ok() :> IActionResult;
-        }
-        |> Async.StartAsTask
-#endif

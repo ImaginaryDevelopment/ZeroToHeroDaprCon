@@ -13,14 +13,14 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["ContosoCrafts.CheckoutProcessor.csproj", "./"]
-RUN dotnet restore "./ContosoCrafts.CheckoutProcessor.csproj"
+COPY ["ContosoCrafts.CheckoutProcessor.fsproj", "./"]
+RUN dotnet restore "./ContosoCrafts.CheckoutProcessor.fsproj"
 COPY . .
 WORKDIR /src
-RUN dotnet build "ContosoCrafts.CheckoutProcessor.csproj" -c Release -o /app/build
+RUN dotnet build "ContosoCrafts.CheckoutProcessor.fsproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ContosoCrafts.CheckoutProcessor.csproj" -c Release -o /app/publish
+RUN dotnet publish "ContosoCrafts.CheckoutProcessor.fsproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

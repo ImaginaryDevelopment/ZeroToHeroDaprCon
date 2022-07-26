@@ -13,14 +13,14 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["ContosoCrafts.ProductsApi.csproj", "./"]
-RUN dotnet restore "./ContosoCrafts.ProductsApi.csproj"
+COPY ["ContosoCrafts.ProductsApi.fsproj", "./"]
+RUN dotnet restore "./ContosoCrafts.ProductsApi.fsproj"
 COPY . .
 WORKDIR /src
-RUN dotnet build "ContosoCrafts.ProductsApi.csproj" -c Release -o /app/build
+RUN dotnet build "ContosoCrafts.ProductsApi.fsproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ContosoCrafts.ProductsApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "ContosoCrafts.ProductsApi.fsproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

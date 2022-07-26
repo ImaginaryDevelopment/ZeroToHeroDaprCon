@@ -42,3 +42,8 @@ Component | Role(s) | Exposed local ports
 [Zipkin](https://zipkin.io/)| Distributed tracing | 9411
 [Fluent Bit](https://fluentbit.io/)| Log forwarder | 24224, 24220
 [Seq](https://datalust.co/seq)  | Log Aggregator | 8191, 12201
+
+
+## FBuild - F# build system (pending)
+
+does not account for the docker system, nor does it have a way to work around the need to have a db running thus far

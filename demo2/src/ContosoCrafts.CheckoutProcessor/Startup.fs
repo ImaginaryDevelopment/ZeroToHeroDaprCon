@@ -7,16 +7,19 @@ open Microsoft.Extensions.DependencyInjection;
 
 type Startup(configuration: IConfiguration) =
 
-    member this.Configuration = configuration;
+    member _.Configuration = configuration;
 
-    member this.ConfigureServices(services: IServiceCollection) =
-        services.AddControllers();
+    member _.ConfigureServices(services: IServiceCollection) : unit =
+        services.AddControllers()
+        |> ignore
 
-    member this.Configure(app: IApplicationBuilder) =
+    member _.Configure(app: IApplicationBuilder) : unit =
         // warning here for not using a proper ignore
-        app.UseRouting();
+        app.UseRouting()
+        |> ignore
         app.UseEndpoints(fun endpoints ->
             // no ignore here would be an error for a lambda function
             endpoints.MapControllers()
             |> ignore<ControllerActionEndpointConventionBuilder>
-        );
+        )
+        |> ignore
