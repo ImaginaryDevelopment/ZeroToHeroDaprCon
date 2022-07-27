@@ -1,7 +1,7 @@
 module ContosoCrafts.CheckoutProcessor.Program
 
-open Microsoft.AspNetCore.Hosting;
-open Microsoft.Extensions.Hosting;
+open Microsoft.AspNetCore.Hosting
+open Microsoft.Extensions.Hosting
 
 let createHostBuilder (args: string[]) : IHostBuilder =
     Host.CreateDefaultBuilder(args)
@@ -12,11 +12,11 @@ let createHostBuilder (args: string[]) : IHostBuilder =
             // this would have also worked, but I prefer to strongly type my ignores
             // |> ignore
             |> ignore<IWebHostBuilder>
-        );
+        )
 
 // this attribute may have been required
 // not sure why I was getting a warning without it
 [<EntryPoint>]
 let main (args: string[]) =
-    createHostBuilder(args).Build().Run();
-    0;
+    createHostBuilder(args).Build().Run()
+    0

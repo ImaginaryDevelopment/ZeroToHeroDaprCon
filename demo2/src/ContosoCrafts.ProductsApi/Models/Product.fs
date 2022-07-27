@@ -1,9 +1,9 @@
 ﻿namespace ContosoCrafts.ProductsApi.Models
 
-open System;
-open System.Text.Json.Serialization;
-open MongoDB.Bson;
-open MongoDB.Bson.Serialization.Attributes;
+open System
+open System.Text.Json.Serialization
+open MongoDB.Bson
+open MongoDB.Bson.Serialization.Attributes
 
 type Product() =
     [<BsonId>]

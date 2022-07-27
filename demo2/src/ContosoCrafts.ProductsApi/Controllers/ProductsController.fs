@@ -1,10 +1,10 @@
 ﻿namespace ContosoCrafts.ProductsApi.Controllers
 
 open System
-open System.Threading.Tasks;
-open Microsoft.AspNetCore.Mvc;
+open System.Threading.Tasks
+open Microsoft.AspNetCore.Mvc
 
-open ContosoCrafts.ProductsApi.Services;
+open ContosoCrafts.ProductsApi.Services
 
 
 // assuming the framework will be ok with immutables here
@@ -22,22 +22,22 @@ type ProductsController(productService: IProductService) =
     member this.GetList(page : int Nullable, limit: int Nullable) : Task<IActionResult> =
         let pagingInfo = PagingInfo(page,limit)
         task{
-            let! result = productService.GetProducts pagingInfo;
-            return this.Ok(result) :> IActionResult;
+            let! result = productService.GetProducts pagingInfo
+            return this.Ok(result) :> IActionResult
         }
 
     [<HttpGet("{id}")>]
     // public async Task<ActionResult> GetSingle(string id)
     member this.GetSingle(id: string) =
         task{
-            let! result = productService.GetSingle(id);
-            return this.Ok(result) :> IActionResult;
+            let! result = productService.GetSingle(id)
+            return this.Ok(result) :> IActionResult
         }
 
     [<HttpPatch>]
     // public async Task<ActionResult> Patch(RatingRequest request)
     member this.Patch(request:RatingRequest): Task<IActionResult> =
         task{
-            do! productService.AddRating(request.ProductId, request.Rating);
-            return this.Ok() :> IActionResult;
+            do! productService.AddRating(request.ProductId, request.Rating)
+            return this.Ok() :> IActionResult
         }
