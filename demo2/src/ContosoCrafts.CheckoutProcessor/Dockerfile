@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 ARG USERNAME=wutang
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -11,7 +11,7 @@ ENV ASPNETCORE_URLS=http://+:80
 
 EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["ContosoCrafts.CheckoutProcessor.fsproj", "./"]
 RUN dotnet restore "./ContosoCrafts.CheckoutProcessor.fsproj"
